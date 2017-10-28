@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -32,9 +33,25 @@ void quick_sort(int a[], int length)
     }
 }
 
+void radix_sort(int a[], int length)
+{
+    queue<int> bin[10];
+    int i;
+    for (int order=1; order <= 1e+9; order *= 10){
+        for (i = 0; i < length; i++)
+            bin[a[i] / order % 10].push(a[i]);
+        i = 0;
+        for (int next = 0; next < 10; next++)
+            while (!bin[next].empty()) {
+                a[i++] = bin[next].front();
+                bin[next].pop();
+            }
+    }
+}
+
 int main(){
     int array_to_sort[] = {5,4,3,2,1,0};
-    quick_sort(array_to_sort, 6);
+    radix_sort(array_to_sort, 6);
     
     cout<< "Sorted array: ";
     for (int i = 0; i < 6; i++)
