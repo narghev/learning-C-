@@ -17,9 +17,24 @@ void insertion_sort(int a[], int length)
             swap(a[element - 1], a[element]);
 }
 
+void quick_sort(int a[], int length)
+{
+    if (length > 1){
+        int *left=a, *right=&a[length - 1], dir=1;
+        while (left != right){
+            for (;*left * dir< *right * dir;right-=dir);
+            swap(*left, *right);
+            swap(left, right);
+            dir = -dir;
+        }
+        quick_sort(a, left - a);
+        quick_sort(left + 1, length - 1 - (left - a));
+    }
+}
+
 int main(){
     int array_to_sort[] = {5,4,3,2,1,0};
-    insertion_sort(array_to_sort, 6);
+    quick_sort(array_to_sort, 6);
     
     cout<< "Sorted array: ";
     for (int i = 0; i < 6; i++)
